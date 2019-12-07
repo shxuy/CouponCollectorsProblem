@@ -13,9 +13,9 @@ python实现第二类Stirling数: https://blog.csdn.net/LuYi_WeiLin/article/deta
 
 """
 
-import numpy as np
 import math
 from stirling2_lookup_table import Stirling2LookupTable
+from coupon_collector_solver import CouponCollectorSolver
 
 def stirling2(n: int, m: int):
     if m > n or m == 0:
@@ -27,11 +27,6 @@ def stirling2(n: int, m: int):
     return stirling2(n - 1, m - 1) + stirling2(n - 1, m) * m
 
 
-for i in range(10):
-    s = ""
-    for j in range(10):
-        s += str(stirling2(i, j)) + "\t"
-    print(s)
 
 def cdf(n: int, m: int):
     return math.factorial(m) * stirling2(n, m) / pow(m, n)
@@ -41,7 +36,12 @@ def pdf(n: int, m: int):
 
 # print(stirling2(10, 9))
 stirling2_table = Stirling2LookupTable(9, 9)
-print(stirling2_table)
+#print(stirling2_table)
+solver = CouponCollectorSolver(0)
+
+for i in range(0, 10):
+    print(solver.pdf(i))
+
 
 def cdf(number_of_cards: int):
     pass
