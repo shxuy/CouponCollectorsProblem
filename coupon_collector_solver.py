@@ -22,7 +22,7 @@ class CouponCollectorSolver(object):
         if n < 0:
             raise ValueError('the parameter n should be a natural number')
         self.__n = n
-        self.__max_pdf_cdf_t = int(self.expectation * 3)  # 概率密度函数和累计分布函数的自变量最大值，三倍于数学期望应该够了
+        self.__max_pdf_cdf_t = int(self.expectation * 3)  # 概率密度函数和累积分布函数的自变量最大值，三倍于数学期望应该够了
         self.__table = Stirling2LookupTable(self.__max_pdf_cdf_t, self.__n)
         self.__cdf_series = None
 
@@ -44,8 +44,8 @@ class CouponCollectorSolver(object):
     @property
     def max_pdf_cdf_t(self):
         """
-        返回概率密度函数和累计分布函数的自变量最大值
-        :return: 概率密度函数和累计分布函数的自变量最大值: int
+        返回概率密度函数和累积分布函数的自变量最大值
+        :return: 概率密度函数和累积分布函数的自变量最大值: int
         """
         return self.__max_pdf_cdf_t
 
@@ -85,6 +85,30 @@ class CouponCollectorSolver(object):
         if t < 0 or t > self.__max_pdf_cdf_t:
             raise ValueError('the parameter t should be >= 0 and <= %d' % self.__max_pdf_cdf_t)
         return math.factorial(self.__n) * self.__table.stirling2(t, self.__n) / pow(self.__n, t)
+
+    @property
+    def horizontal_axis(self):
+        """
+        所有概率密度函数值或所有累积分布函数值对应的横坐标轴
+        :return: 一个由self.__max_pdf_cdf_t + 1个int组成的list
+        """
+        return list(range(self.__max_pdf_cdf_t + 1))
+
+    @property
+    def all_pdf(self):
+        """
+        区间[0, self.__max_pdf_cdf_t]上的所有概率密度函数值
+        :return: 一个由self.__max_pdf_cdf_t + 1个float组成的list
+        """
+        return [self.pdf(x) for x in range(self.__max_pdf_cdf_t + 1)]
+
+    @property
+    def all_cdf(self):
+        """
+        区间[0, self.__max_pdf_cdf_t]上的所有累积分布函数值
+        :return: 一个由self.__max_pdf_cdf_t + 1个float组成的list
+        """
+        return [self.cdf(x) for x in range(self.__max_pdf_cdf_t + 1)]
 
     def two_sided_confidence_interval(self, confidence_level: float):
         """
@@ -133,7 +157,7 @@ class CouponCollectorSolver(object):
 
     def __calculate_all_cdf(self):
         """
-        计算区间[0, self.__max_pdf_cdf_t]上的所有累计分布函数值
+        计算区间[0, self.__max_pdf_cdf_t]上的所有累积分布函数值
         :return: 无
         """
         if not self.__cdf_series:
