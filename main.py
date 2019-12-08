@@ -12,6 +12,7 @@ __author__ = 'Nick Yang'
 import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
+import logging
 from coupon_collector_solver import CouponCollectorSolver
 
 
@@ -124,6 +125,10 @@ class Application(tk.Frame):
         cdf.set_ylim(0, 1)
         # 真正画上去
         self.canvas.draw()
+        # 把计算结果输出到控制台，方便用户复制结果
+        logging.info('number of types: ' + self.label_n['text'])
+        logging.info('expectation: ' + self.label_expectation['text'])
+        logging.info('variance: ' + self.label_variance['text'])
 
     def on_scale_confidence_level_change(self, confidence_level: float):
         self.confidence_level = float(confidence_level)
@@ -137,6 +142,10 @@ class Application(tk.Frame):
             self.label_one_sided_confidence_interval['text'] = \
                 '(0, %d) or (%d, math.inf)' % (self.solver.one_sided_upper_confidence_limit(self.confidence_level),
                                                self.solver.one_sided_lower_confidence_limit(self.confidence_level))
+            # 把计算结果输出到控制台，方便用户复制结果
+            logging.info('confidence level: {:.0%}'.format(self.confidence_level))
+            logging.info('two sided confidence interval: ' + self.label_two_sided_confidence_interval['text'])
+            logging.info('one sided confidence interval: ' + self.label_one_sided_confidence_interval['text'])
 
     def center_window(self, w: int, h: int):
         """
@@ -156,6 +165,7 @@ class Application(tk.Frame):
 
 
 if __name__ == '__main__':
+    logging.getLogger().setLevel(logging.INFO)
     root = tk.Tk()
     app = Application(master=root)
     app.mainloop()
