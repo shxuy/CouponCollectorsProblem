@@ -164,6 +164,7 @@ class Application(tk.Frame):
         tk.Frame.__init__(self, master)
         self.master = master
         self.master.title("Coupon Collector's problem")
+        self.master.iconbitmap('coupon.ico')  # 经反复实验，只有windows平台能改图标
         self.pack()
         self.center_window(500, 500)
         # 最上面空一行
@@ -244,11 +245,12 @@ class Application(tk.Frame):
         self.update_interval()
 
     def update_interval(self):
-        interval = self.solver.two_sided_confidence_interval(self.confidence_level)
-        self.label_two_sided_confidence_interval['text'] = '(%d, %d)' % (interval[0], interval[1])
-        self.label_one_sided_confidence_interval['text'] = \
-            '(0, %d) or (%d, math.inf)' % (self.solver.one_sided_upper_confidence_limit(self.confidence_level),
-                                           self.solver.one_sided_lower_confidence_limit(self.confidence_level))
+        if self.solver:
+            interval = self.solver.two_sided_confidence_interval(self.confidence_level)
+            self.label_two_sided_confidence_interval['text'] = '(%d, %d)' % (interval[0], interval[1])
+            self.label_one_sided_confidence_interval['text'] = \
+                '(0, %d) or (%d, math.inf)' % (self.solver.one_sided_upper_confidence_limit(self.confidence_level),
+                                                self.solver.one_sided_lower_confidence_limit(self.confidence_level))
 
     def center_window(self, w: int, h: int):
         """
