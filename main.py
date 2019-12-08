@@ -24,19 +24,20 @@ class Application(tk.Frame):
         tk.Frame.__init__(self, master)
         self.master = master
         self.master.title("Coupon Collector's problem")
-        self.master.iconbitmap('coupon.ico')  # 经反复实验，只有windows平台能改图标
+        self.master.iconbitmap('img\coupon.ico')  # 经反复实验，只有windows平台能改图标
         self.pack()
         self.center_window(800, 600)
+        self.master.resizable(0, 0)
         # 最上面空一行
         self.frame0 = tk.Frame(self.master)
         self.frame0.pack(side=tk.TOP, ipady=10)
         # 设置卡片种类数的滚动条
         self.frame1 = tk.Frame(self.master)
-        self.frame1.pack(side=tk.TOP, pady=3)
+        self.frame1.pack(side=tk.TOP, pady=2)
         self.label_annotation_n = tk.Label(self.frame1, text='number of types: ')
         self.label_annotation_n.pack(side=tk.LEFT)
         self.n = None
-        self.scale_n = tk.Scale(self.frame1, from_=1, to=200, resolution=1, orient=tk.HORIZONTAL, length=300,
+        self.scale_n = tk.Scale(self.frame1, from_=1, to=200, resolution=1, orient=tk.HORIZONTAL, length=600,
                                 showvalue=0, variable=self.n, command=self.on_scale_n_change)
         self.scale_n.set(12)
         self.scale_n.pack(side=tk.LEFT)
@@ -45,12 +46,12 @@ class Application(tk.Frame):
         self.label_n.pack(side=tk.LEFT)
         # 设置置信水平的滚动条
         self.frame2 = tk.Frame(self.master)
-        self.frame2.pack(side=tk.TOP, pady=3)
+        self.frame2.pack(side=tk.TOP, pady=2)
         self.label_annotation_confidence_level = tk.Label(self.frame2, text='confidence level: ')
         self.label_annotation_confidence_level.pack(side=tk.LEFT)
         self.confidence_level = None
         self.scale_confidence_level = tk.Scale(self.frame2, from_=0.01, to=0.99, resolution=0.01, orient=tk.HORIZONTAL,
-                                               length=300, showvalue=0, variable=self.confidence_level,
+                                               length=600, showvalue=0, variable=self.confidence_level,
                                                command=self.on_scale_confidence_level_change)
         self.scale_confidence_level.set(0.95)
         self.scale_confidence_level.pack(side=tk.LEFT)
@@ -62,21 +63,21 @@ class Application(tk.Frame):
         self.frame3.pack(side=tk.TOP, ipady=10)
         # 打印数学期望
         self.frame4 = tk.Frame(self.master)
-        self.frame4.pack(side=tk.TOP, pady=3)
+        self.frame4.pack(side=tk.TOP, pady=2)
         self.label_annotation_expectation = tk.Label(self.frame4, text='expectation: ', width=20)
         self.label_annotation_expectation.pack(side=tk.LEFT)
         self.label_expectation = tk.Label(self.frame4, width=35)
         self.label_expectation.pack(side=tk.LEFT)
         # 打印方差
         self.frame5 = tk.Frame(self.master)
-        self.frame5.pack(side=tk.TOP, pady=3)
+        self.frame5.pack(side=tk.TOP, pady=2)
         self.label_annotation_variance = tk.Label(self.frame5, text='     variance: ', width=20)
         self.label_annotation_variance.pack(side=tk.LEFT)
         self.label_variance = tk.Label(self.frame5, width=35)
         self.label_variance.pack(side=tk.LEFT)
         # 打印双侧置信区间
         self.frame6 = tk.Frame(self.master)
-        self.frame6.pack(side=tk.TOP, pady=3)
+        self.frame6.pack(side=tk.TOP, pady=2)
         self.label_annotation_two_sided_confidence_interval = tk.Label(self.frame6,
                                                                        text='two sided confidence interval: ', width=25)
         self.label_annotation_two_sided_confidence_interval.pack(side=tk.LEFT)
@@ -84,7 +85,7 @@ class Application(tk.Frame):
         self.label_two_sided_confidence_interval.pack(side=tk.LEFT)
         # 打印单侧置信区间
         self.frame7 = tk.Frame(self.master)
-        self.frame7.pack(side=tk.TOP, pady=3)
+        self.frame7.pack(side=tk.TOP, pady=2)
         self.label_annotation_one_sided_confidence_interval = tk.Label(self.frame7,
                                                                        text='one sided confidence interval: ', width=25)
         self.label_annotation_one_sided_confidence_interval.pack(side=tk.LEFT)
@@ -92,7 +93,7 @@ class Application(tk.Frame):
         self.label_one_sided_confidence_interval.pack(side=tk.LEFT)
         # 概率密度函数和累积分布函数绘制区
         self.frame8 = tk.Frame(self.master)
-        self.frame8.pack(side=tk.TOP, pady=3)
+        self.frame8.pack(side=tk.TOP, pady=2)
         self.pdf_and_cdf = Figure(figsize=(8, 4), dpi=100)
         self.canvas = FigureCanvasTkAgg(self.pdf_and_cdf, master=self.frame8)
         self.canvas.get_tk_widget().pack(side=tk.BOTTOM)
