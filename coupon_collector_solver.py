@@ -31,6 +31,14 @@ class CouponCollectorSolver(object):
         return self.__n
 
     @property
+    def max_pdf_cdf_t(self):
+        """
+        返回概率密度函数和累积分布函数的自变量最大值
+        :return: 概率密度函数和累积分布函数的自变量最大值: int
+        """
+        return self.__max_pdf_cdf_t
+
+    @property
     def expectation(self):
         """
         返回数学期望
@@ -40,14 +48,6 @@ class CouponCollectorSolver(object):
         for i in range(1, self.__n + 1):
             sum += self.__n / i
         return sum
-
-    @property
-    def max_pdf_cdf_t(self):
-        """
-        返回概率密度函数和累积分布函数的自变量最大值
-        :return: 概率密度函数和累积分布函数的自变量最大值: int
-        """
-        return self.__max_pdf_cdf_t
 
     @property
     def variance(self):
