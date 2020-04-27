@@ -107,13 +107,13 @@ venv.bak/
 .idea
 
 # Microsoft Office temporary file
-~$*
+*~$*
 
 # MacOS
-*/.DS_Store
-.DS_Store
+*.DS_Store
+*._*
 
 # Windows:
-Thumbs.db
-ehthumbs.db
-Desktop.ini
+*Thumbs.db
+*ehthumbs.db
+*Desktop.ini
